@@ -5,9 +5,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>New Blog Post</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
         <h:form>
+            <h:messages></h:messages>
             <h:panelGrid columns="2" >
                 <h:outputText value="Enter The Title: " />
                 <h:inputText label="title" value="#{post.title}" id="title" required="true"><f:validateRequired></f:validateRequired>
@@ -21,6 +23,13 @@
                 <h:inputText label="tag" value="#{tag.tag}" id="tag" required="true"><f:validateRequired></f:validateRequired>
                 </h:inputText>
             </h:panelGrid>
+            <h:commandButton value="Submit" label="submit"/>
         </h:form>
+        <br />
+        <h:link outcome="/post/List" value="Show All Post Items"/>
+        <br />
+        <h:link outcome="/tags/List" value="Show All Tags Items"/>
     </h:body>
+
+
 </html>

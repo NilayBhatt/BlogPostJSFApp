@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewTagsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewTagsLabel_id}"/>
+                    <h:outputText value="#{tagsController.selected.id}" title="#{bundle.ViewTagsTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewTagsLabel_tag}"/>
+                    <h:outputText value="#{tagsController.selected.tag}" title="#{bundle.ViewTagsTitle_tag}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tagsController.destroyAndView}" value="#{bundle.ViewTagsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewTagsEditLink}"/>
+                <br />
+                <h:commandLink action="#{tagsController.prepareCreate}" value="#{bundle.ViewTagsCreateLink}" />
+                <br />
+                <h:commandLink action="#{tagsController.prepareList}" value="#{bundle.ViewTagsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewTagsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
