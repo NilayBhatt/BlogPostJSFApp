@@ -19,11 +19,11 @@
                 <h:inputTextarea label="body" value="#{post.body}" id="body"  required="true"><f:validateRequired></f:validateRequired>
                 </h:inputTextarea>
 
-                <h:outputText value="Enter a tag comma seperated: " />
+<!--                <h:outputText value="Enter a tag comma seperated: " />
                 <h:inputText label="tag" value="#{tag.tag}" id="tag" required="true"><f:validateRequired></f:validateRequired>
-                </h:inputText>
+                </h:inputText>-->
             </h:panelGrid>
-            <h:commandButton value="Submit" label="submit"/>
+            <h:commandButton value="Submit" label="submit" action="#{postJpaController.create}"/>
         </h:form>
         <br />
         <h:link outcome="/post/List" value="Show All Post Items"/>
