@@ -21,14 +21,13 @@ import javax.persistence.Table;
 @Entity
 @ManagedBean(name = "tag")
 @SessionScoped
-@Table( name = "Tags")
 public class Tags implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id = null;
     
-    private String tag;
+    private String tag = null;
 
     public Long getId() {
         return id;
@@ -60,7 +59,7 @@ public class Tags implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Tags[ id=" + id + " Tag =" + tag +" ]";
+        return "Models.Tags[ id=" + id + " ]";
     }
 
     /**

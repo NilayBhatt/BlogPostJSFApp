@@ -46,7 +46,7 @@ public class TagsJpaController implements Serializable {
         try {
             utx.begin();
             EntityManager em = emf.createEntityManager();
-            em.persist(tag);
+            em.persist(getTag());
             utx.commit();
         } catch (Exception ex) {
             try {
