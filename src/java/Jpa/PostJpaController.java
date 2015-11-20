@@ -5,22 +5,23 @@
  */
 package Jpa;
 
-    import Beans.Post;
-    import Jpa.exceptions.NonexistentEntityException;
-    import Jpa.exceptions.RollbackFailureException;
-    import java.io.Serializable;
-    import java.util.List;
+import Beans.Post;
+import Beans.Tags;
+import Jpa.exceptions.NonexistentEntityException;
+import Jpa.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import java.util.List;
 import javax.annotation.Resource;
-    import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-    import javax.persistence.EntityManager;
-    import javax.persistence.EntityManagerFactory;
-    import javax.persistence.Query;
-    import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceUnit;
-    import javax.persistence.criteria.CriteriaQuery;
-    import javax.persistence.criteria.Root;
-    import javax.transaction.UserTransaction;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -28,26 +29,24 @@ import javax.persistence.PersistenceUnit;
  */
 @ManagedBean
 public class PostJpaController implements Serializable {
+
     public PostJpaController() {
     }
     @Resource
     private UserTransaction utx;
-    
-    @PersistenceUnit(name="HW3DBPU")
+
+    @PersistenceUnit(name = "HW3DBPU")
     private EntityManagerFactory emf;
-    
+
     @ManagedProperty(value = "#{post}")
     private Post post;
-
- 
-    
     
     public String create() throws RollbackFailureException, Exception {
         String result = "Error";
         try {
             utx.begin();
-           EntityManager em = emf.createEntityManager();
-            em.persist(getPost());
+            EntityManager em = emf.createEntityManager();
+            em.persist(post);
             utx.commit();
             result = "ConfirmationPage";
         } catch (Exception ex) {
@@ -62,7 +61,7 @@ public class PostJpaController implements Serializable {
 //                em.close();
             //}
         }
-        
+
         return result;
     }
 
@@ -167,7 +166,6 @@ public class PostJpaController implements Serializable {
 //            em.close();
 //        }
 //    }
-
     /**
      * @return the post
      */
@@ -181,5 +179,8 @@ public class PostJpaController implements Serializable {
     public void setPost(Post post) {
         this.post = post;
     }
-    
+
+    /**
+     * @return the tagControllerl
+     */
 }
