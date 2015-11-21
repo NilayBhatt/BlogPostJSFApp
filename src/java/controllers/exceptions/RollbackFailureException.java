@@ -1,4 +1,4 @@
-package Jpa.exceptions;
+package controllers.exceptions;
 
 public class RollbackFailureException extends Exception {
     public RollbackFailureException(String message, Throwable cause) {

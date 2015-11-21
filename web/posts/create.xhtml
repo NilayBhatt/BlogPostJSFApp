@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Create a Post</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h1>Create a new blog post.</h1>
+        <h:messages class="alert alert-danger"></h:messages>
+        <h:form>
+            <h:outputText value="Title"></h:outputText>
+            <h:inputText label="Title" class="form-control" value="#{post.title}" required="true">
+                <f:validateLength minimum="3" maximum="60"></f:validateLength>
+            </h:inputText>
+
+            <h:outputText value="Body"></h:outputText>
+            <h:inputTextarea class="form-control" label="Body" value="#{post.body}" required="true">
+                <f:validateLength minimum="1" maximum="500"></f:validateLength>
+            </h:inputTextarea>
+
+            <h:outputText value="Author"></h:outputText>
+
+            <h:selectOneMenu class="form-control" value="#{post.author}">
+            <f:selectItems value="#{authorController.getAuthors()}" var="author" itemLabel="#{author.name}" itemValue="#{author.name}" />
+            </h:selectOneMenu>
+            <br />
+            <h:commandButton class="btn btn-primary" action="#{postController.savePost}" value="Create New Post"></h:commandButton>
+        </h:form>
+        </div>
+    </h:body>
+</html>

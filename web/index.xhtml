@@ -2,34 +2,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>New Blog Post</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <title>My Blog</title>
+        <h:outputStylesheet name="css/styles.css"/>
     </h:head>
     <h:body>
-        <h:form>
-            <h:messages></h:messages>
-            <h:panelGrid columns="2" >
-                <h:outputText value="Enter The Title: " />
-                <h:inputText label="title" value="#{post.title}" id="title" required="true"><f:validateRequired></f:validateRequired>
-                </h:inputText>
-
-                <h:outputText value="Enter The Body: " />
-                <h:inputTextarea label="body" value="#{post.body}" id="body"  required="true"><f:validateRequired></f:validateRequired>
-                </h:inputTextarea>
-
-<!--                <h:outputText value="Enter a tag comma seperated: " />
-                <h:inputText label="tag" value="#{tag.tag}" id="tag" required="true"><f:validateRequired></f:validateRequired>
-                </h:inputText>-->
-            </h:panelGrid>
-            <h:commandButton value="Submit" label="submit" action="#{postJpaController.create}"/>
-        </h:form>
-        <br />
-        <h:link outcome="/post/List" value="Show All Post Items"/>
-        <br />
-        <h:link outcome="/tags/List" value="Show All Tags Items"/>
+        <div class="container">
+            <h1>Welcome to my blog!</h1>
+            <p>You may do the following:</p>
+            <ul>
+                <li><a href="./faces/authors/add.xhtml">Add Author</a></li>
+                <li><a href="./faces/posts/create.xhtml">Create blog post</a></li>
+                <li><a href="./faces/posts/search.xhtml">Search Author</a></li>
+            </ul>
+            
+            <ui:repeat value="#{postController.allPosts}" var="post">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">#{post.title}</h3>
+                </div>
+                <div class="panel-body">
+                 #{post.body}
+                </div>
+                <div class="panel-footer">
+                By: #{post.author}
+                </div>
+              </div>
+            </ui:repeat>
+        </div>
     </h:body>
-
 
 </html>

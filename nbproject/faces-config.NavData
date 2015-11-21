@@ -2,15 +2,11 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="tags/Edit.xhtml" x="900" y="150" zoom="true"/>
         <Node id="tags/List.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="tags/Edit.xhtml" x="900" y="150" zoom="true"/>
         <Node id="index.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="post/Create.xhtml" x="400" y="150" zoom="true"/>
-        <Node id="post/List.xhtml" x="650" y="150" zoom="true"/>
         <Node id="tags/Create.xhtml" x="150" y="150" zoom="true"/>
         <Node id="tags/View.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="post/View.xhtml" x="139" y="292" zoom="true"/>
-        <Node id="post/Edit.xhtml" x="400" y="300" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
