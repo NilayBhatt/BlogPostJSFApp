@@ -3,6 +3,8 @@ package controllers;
 import models.Author;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +29,7 @@ public class AuthorController {
     public String addAuthor() {
         String returnValue = "error";
         try {
+            author.setPassword(Hash(author.getPassword()));
             userTransaction.begin();
             EntityManager em = entityManagerFactory.createEntityManager();
             em.persist(author);
@@ -37,6 +40,22 @@ public class AuthorController {
             e.printStackTrace();
         }
         return returnValue;
+    }
+    
+    public String Hash(String password) throws NoSuchAlgorithmException {
+        MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+        byte[] bs;
+        msgDigest.reset();
+        bs = msgDigest.digest(password.getBytes());
+        StringBuilder sBuilder = new StringBuilder();
+        for (int i = 0; i < bs.length; i++) {
+            String hexVal = Integer.toHexString(0xFF & bs[i]);
+            if (hexVal.length() == 1) {
+                sBuilder.append("0");
+            }
+            sBuilder.append(hexVal);
+        }
+        return sBuilder.toString();
     }
 
     public List getAuthors() {

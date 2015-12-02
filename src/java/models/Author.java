@@ -16,6 +16,7 @@ public class Author implements Serializable {
     private Long id;
     private String name;
     private String email;
+    private String password;
 
     public Author() {}
 
@@ -41,5 +42,13 @@ public class Author implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+       this.password = password;
     }
 }
