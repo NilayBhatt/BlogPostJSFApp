@@ -28,6 +28,13 @@
                     <f:validator validatorId="emailValidatation" />
                 </h:inputText>
                 </div>
+            
+                <div class="form-group">
+                    <label>Password</label>
+                <h:inputSecret label="Password" value="#{author.password}" required="true">
+                    <f:validateLength minimum="6" maximum="20"></f:validateLength>
+                </h:inputSecret>    
+                </div>
 
                 <h:panelGroup></h:panelGroup>
                 <h:commandButton class="btn btn-primary" action="#{authorController.addAuthor}" value="Add Author"></h:commandButton>
