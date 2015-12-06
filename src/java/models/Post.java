@@ -5,6 +5,11 @@ import javax.faces.bean.ManagedBean;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.lang.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @Entity
@@ -51,5 +56,32 @@ public class Post implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    /**
+     *
+     * @param context
+     * @param inputComponent
+     * @param value
+     * @return
+     */
+    public boolean validateBody() {
+        boolean badWord = false;
+        ArrayList<String> words = new ArrayList();
+        String tempBody = this.body;
+        
+        words.add("poop");
+        words.add("cat");
+        words.add("poodle");
+
+        
+        tempBody = tempBody.replaceAll("\\s+","").toLowerCase();
+        for(int i = 0; i < words.size(); i++){
+        //for( Iterator i = words.iterator(); i.hasNext();) {
+            badWord = tempBody.contains(words.get(i));
+            if(badWord) break;
+        }
+        
+        return badWord;
     }
 }

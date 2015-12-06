@@ -4,8 +4,10 @@ import models.Post;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -25,8 +27,35 @@ public class PostController {
     
     @ManagedProperty(value = "#{post}")
     private Post post;
+    
+    @Resource
+    private boolean filter = false;
 
     public String savePost() {
+        String returnValue = "error";
+        try {
+            if(!HasBadWord()){
+            userTransaction.begin();
+            EntityManager em = entityManagerFactory.createEntityManager();
+            em.persist(post);
+            userTransaction.commit();
+            em.close();
+            setFilter(false);
+            returnValue = "confirmation";
+            } else {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                FacesMessage facesMessage = new FacesMessage("There is a Flagged Word in your Post. This may call for an Audit. Please Review or Click Again To Proceed Anyway.");
+                facesContext.addMessage(null, facesMessage);
+                setFilter(true);
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+    
+    public String savePostOverride() {
         String returnValue = "error";
         try {
             userTransaction.begin();
@@ -40,6 +69,7 @@ public class PostController {
         }
         return returnValue;
     }
+
 
     public List getMatchingPosts() {
         List<Post> posts = new ArrayList();
@@ -67,6 +97,15 @@ public class PostController {
         }
         return posts;
     }
+    
+    public boolean HasBadWord() {
+        if(post.getBody() == null) {
+            return false;
+        } else {
+            boolean filter = post.validateBody();
+            return filter;
+        }
+    }
 
     public Post getPost() {
         return post;
@@ -91,5 +130,19 @@ public class PostController {
         }
         
         return authors;
+    }
+
+    /**
+     * @return the filter
+     */
+    public boolean isFilter() {
+        return filter;
+    }
+
+    /**
+     * @param filter the filter to set
+     */
+    public void setFilter(boolean filter) {
+        this.filter = filter;
     }
 }

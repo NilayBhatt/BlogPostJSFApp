@@ -15,8 +15,8 @@
              <h:messages class="alert alert-danger"></h:messages>
         <h:form>
                 <div class="form-group">
-                    <label>Name</label>
-                <h:inputText label="Name" value="#{author.name}" required="true">
+                    <label class ="col-sm-1">Name</label>
+                <h:inputText class="col-sm-11" value="#{author.name}" required="true">
                     <f:validateLength minimum="2" maximum="60"></f:validateLength>
                 </h:inputText>
                 </div>
@@ -32,6 +32,11 @@
                 <h:panelGroup></h:panelGroup>
                 <h:commandButton class="btn btn-primary" action="#{authorController.addAuthor}" value="Add Author"></h:commandButton>
         </h:form>
+             
+             
+             
+             
+             
         </div>
     </h:body>
 </html>

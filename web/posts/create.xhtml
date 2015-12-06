@@ -28,7 +28,14 @@
             <f:selectItems value="#{authorController.getAuthors()}" var="author" itemLabel="#{author.name}" itemValue="#{author.name}" />
             </h:selectOneMenu>
             <br />
-            <h:commandButton class="btn btn-primary" action="#{postController.savePost}" value="Create New Post"></h:commandButton>
+            <h:commandButton class="btn btn-primary col-sm-12" action="#{postController.savePost}" value="Create New Post"></h:commandButton>
+            
+            <h:panelGroup rendered="#{postController.filter}">
+            <div class="col-sm-12" style="padding-top: 20px"></div>
+            <div id="OverrideButton" >
+            <h:commandButton class="btn btn-lg btn-danger col-sm-12" action="#{postController.savePostOverride}" value="Create New Post AnyWay"></h:commandButton>
+            </div>
+            </h:panelGroup>
         </h:form>
         </div>
     </h:body>
