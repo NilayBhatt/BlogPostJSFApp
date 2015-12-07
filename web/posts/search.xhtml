@@ -1,40 +1,40 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Search</title>
-        <h:outputStylesheet library="css" name="styles.css"/>
-    </h:head>
-    <h:body>
-        <div class="container">
-            <h1>Search blog posts by author:</h1>
-            <a href="../../">Back to home</a>
-             <h:form>
-            <strong>Enter author name (case-sensitive): </strong>
-            <h:inputText class="form-control" id="first" value="#{post.author}">
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    >
+    
+    <ui:define name="title">Search</ui:define>
+
+    <ui:define name="content">
+        <h2>Search by anything</h2>
+        <h:form>
+            <div class="input-group input-group-lg">
+            <h:inputText class="form-control" id="first" value="#{post.body}">
                 <f:ajax event="keyup" render="results"/>
             </h:inputText>
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">Search</button>
+             </span>
+            </div>
             <br/>
             
 
             <h:panelGroup id="results">
             <ui:repeat value="#{postController.matchingPosts}" var="post">
-                <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">#{post.title}</h3>
-                </div>
-                <div class="panel-body">
-                 #{post.body}
-                </div>
-              </div>
+            <div class="blog-post">
+                    <h2 class="blog-post-title">#{post.title}</h2>
+                    <div class="blog-post-meta">By <a href="mailto:#{post.author.email}">#{post.author.name}</a></div>
+                    <p>
+                     #{post.body}
+                    </p>
+             </div>
             </ui:repeat>
             </h:panelGroup>
             
 
         </h:form>
-        </div>
-    </h:body>
-</html>
+    </ui:define>
+    
+</ui:composition>

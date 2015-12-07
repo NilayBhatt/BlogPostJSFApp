@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+>
+    <h:head>
+        <title>
+            <ui:insert name="title">The Best Blog Ever</ui:insert>
+        </title>        
+        <h:outputStylesheet name="css/styles.css"/>
+    </h:head>
+
+    <h:body>
+        
+        <div class="blog-masthead">
+            <div class="container">
+              <nav class="blog-nav">
+                <a class="blog-nav-item" href="#{request.contextPath}">Home</a>
+                <a class="blog-nav-item" href="#{request.contextPath}/faces/posts/search.xhtml">Search</a>
+                <a class="blog-nav-item" href="#{request.contextPath}/faces/posts/create.xhtml">New Blog Post</a>
+                <h:panelGroup rendered="#{empty user}">
+                    <a class="blog-nav-item" href="#{request.contextPath}/faces/authors/login.xhtml">Login</a>
+                    <a class="blog-nav-item" href="#{request.contextPath}/faces/authors/register.xhtml">Register</a>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not empty user}">
+                    <h:form style="display: inline-block">
+                        <h:commandLink action="#{authorController.logout()}" class="blog-nav-item" value="Logout"></h:commandLink>
+                    </h:form>
+                 <a class="blog-nav-item pull-right">Welcome #{user.name}!</a>
+                </h:panelGroup>
+              </nav>
+            </div>
+        </div>
+        
+        <div class="container">
+          <div class="blog-header">
+            <h1 class="blog-title">The Best Blog Ever</h1>
+            <p class="lead blog-description">The official blog of the best things ever.</p>
+          </div>
+        </div>
+        
+        <div class="container">
+        
+            <ui:insert name="content" />
+        
+        </div>
+        
+        <footer class="blog-footer">
+           <p>Best blog ever by Nilay Bhatt, Lukasz Brodowski, Donald Moretz.</p>
+         <p>
+            <a href="#">Back to top</a>
+        </p>
+    </footer>
+        
+    </h:body>
+
+</html>

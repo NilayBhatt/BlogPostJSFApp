@@ -1,29 +1,24 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Success</title>
-        <h:outputStylesheet library="css" name="styles.css"/>
-    </h:head>
-    <h:body>
-        <div class="container">
-        <h1>Blog post created successfully.</h1>
-        <strong>Title</strong><br />
-            <h:outputText value="#{post.title}"></h:outputText>
-            <br />
-        <strong>Body</strong><br />
-            <h:outputText value="#{post.body}"></h:outputText>
-            <br />
-            <strong>Author</strong><br/>
-            <h:outputText value="#{post.author}"></h:outputText>
-            
-            <br /><br />
-            
-            <a href="../posts/search.xhtml">Search blog posts here.</a>
-        </div>
-        
- 
-    </h:body>
-</html>
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    >
+    
+    <ui:define name="title">Published</ui:define>
 
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                <h2>Your blog post has been published.</h2>
+                    <div class="blog-post">
+                    <h2 class="blog-post-title">#{post.title}</h2>
+                    <div class="blog-post-meta">By <a href="mailto:#{post.author.email}">#{post.author.name}</a></div>
+                    <p>
+                     #{post.body}
+                    </p>
+                  </div>
+            </div>
+        </div>
+    </ui:define>
+    </ui:composition>

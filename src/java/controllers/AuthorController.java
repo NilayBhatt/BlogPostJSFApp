@@ -14,6 +14,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+import java.security.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 
 @ManagedBean
@@ -29,9 +32,9 @@ public class AuthorController {
     public String addAuthor() {
         String returnValue = "error";
         try {
-            author.setPassword(Hash(author.getPassword()));
             userTransaction.begin();
             EntityManager em = entityManagerFactory.createEntityManager();
+            author.setPosts(null);
             em.persist(author);
             userTransaction.commit();
             em.close();
@@ -42,21 +45,38 @@ public class AuthorController {
         return returnValue;
     }
     
-    public String Hash(String password) throws NoSuchAlgorithmException {
-        MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-        byte[] bs;
-        msgDigest.reset();
-        bs = msgDigest.digest(password.getBytes());
-        StringBuilder sBuilder = new StringBuilder();
-        for (int i = 0; i < bs.length; i++) {
-            String hexVal = Integer.toHexString(0xFF & bs[i]);
-            if (hexVal.length() == 1) {
-                sBuilder.append("0");
+    public String login() {
+        String rValue = "error";
+        Author ok;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        String selectSQL = "select p from Author p where p.email like :email";
+        try {
+            Query selectQuery = entityManager.createQuery(selectSQL);
+            selectQuery.setParameter("email", author.getEmail() + "%");
+            ok = (Author)selectQuery.getSingleResult();
+            
+            if (ok.getPassword().equals(author.getPassword())) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getSessionMap().put("user", ok);
+                rValue = "success";
+            } else {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                FacesMessage facesMessage = new FacesMessage("Wrong username/password.");
+                facesContext.addMessage(null, facesMessage);
+                return null;
             }
-            sBuilder.append(hexVal);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return sBuilder.toString();
+        return rValue;
     }
+    
+    public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("user");
+        return new String("success");
+    }
+   
 
     public List getAuthors() {
         List<Author> authors = new ArrayList();

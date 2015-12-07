@@ -33,10 +33,12 @@ public class PostController {
 
     public String savePost() {
         String returnValue = "error";
+        Author author = (Author)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         try {
             if(!HasBadWord()){
             userTransaction.begin();
             EntityManager em = entityManagerFactory.createEntityManager();
+            post.setAuthor(author);
             em.persist(post);
             userTransaction.commit();
             em.close();
@@ -44,7 +46,7 @@ public class PostController {
             returnValue = "confirmation";
             } else {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
-                FacesMessage facesMessage = new FacesMessage("There is a Flagged Word in your Post. This may call for an Audit. Please Review or Click Again To Proceed Anyway.");
+                FacesMessage facesMessage = new FacesMessage("There is a flagged word in your post. This may call for an audit. Please review or click again to proceed anyway.");
                 facesContext.addMessage(null, facesMessage);
                 setFilter(true);
                 return null;
@@ -74,10 +76,10 @@ public class PostController {
     public List getMatchingPosts() {
         List<Post> posts = new ArrayList();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        String selectSQL = "select p from Post p where p.author like :author";
+        String selectSQL = "select p from Post p where CONCAT(p.body, p.title) like :body";
         try {
             Query selectQuery = entityManager.createQuery(selectSQL);
-            selectQuery.setParameter("author", post.getAuthor() + "%");
+            selectQuery.setParameter("body", "%"+post.getBody() + "%");
             posts = selectQuery.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +90,7 @@ public class PostController {
     public List getAllPosts() {
         List<Post> posts = new ArrayList();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        String selectSQL = "select p from Post p";
+        String selectSQL = "select p from Post p order by p.id desc";
         try {
             Query selectQuery = entityManager.createQuery(selectSQL);
             posts = selectQuery.getResultList();

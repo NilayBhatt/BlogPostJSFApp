@@ -1,0 +1,43 @@
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    >
+    
+    <ui:define name="title">Register</ui:define>
+
+    <ui:define name="content">
+
+
+            <h2>Register a new author</h2>
+             <h:messages class="alert alert-danger"></h:messages>
+        <h:form>
+                <div class="form-group">
+                <label>Name</label>
+                <h:inputText class="form-control" label="Name" value="#{author.name}" required="true">
+                    <f:validateLength minimum="2" maximum="60"></f:validateLength>
+                </h:inputText>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                <h:inputText class="form-control" label="Email" value="#{author.email}" required="true">
+                    <f:validateLength minimum="2" maximum="30"></f:validateLength>
+                    <f:validator validatorId="emailValidatation" />
+                </h:inputText>
+                </div>
+            
+                <div class="form-group">
+                    <label>Password</label>
+                <h:inputSecret class="form-control" label="Password" value="#{author.password}" required="true">
+                    <f:validateLength minimum="6" maximum="20"></f:validateLength>
+                </h:inputSecret>    
+                </div>
+
+                <h:panelGroup></h:panelGroup>
+                <h:commandButton class="btn btn-primary" action="#{authorController.addAuthor}" value="Register"></h:commandButton>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -9,12 +9,30 @@
             <from-outcome>confirmation</from-outcome>
             <to-view-id>posts/confirmation.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>authors/login.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>authors/add.xhtml</from-view-id>
+        <from-view-id>authors/register.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>confirmation</from-outcome>
             <to-view-id>authors/confirmation.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>authors/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>authors/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

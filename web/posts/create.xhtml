@@ -1,42 +1,35 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Create a Post</title>
-        <h:outputStylesheet library="css" name="styles.css"/>
-    </h:head>
-    <h:body>
-        <div class="container">
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    >
+    
+    <ui:define name="title">New Blog Post</ui:define>
+
+    <ui:define name="content">
             <h1>Create a new blog post.</h1>
         <h:messages class="alert alert-danger"></h:messages>
         <h:form>
-            <h:outputText value="Title"></h:outputText>
+            <label>Title</label>
             <h:inputText label="Title" class="form-control" value="#{post.title}" required="true">
                 <f:validateLength minimum="3" maximum="60"></f:validateLength>
             </h:inputText>
 
-            <h:outputText value="Body"></h:outputText>
-            <h:inputTextarea class="form-control" label="Body" value="#{post.body}" required="true">
-                <f:validateLength minimum="1" maximum="500"></f:validateLength>
+            <label>Body</label>
+            <h:inputTextarea class="form-control" label="Body" style="height:250px" value="#{post.body}" required="true">
+                <f:validateLength minimum="1"></f:validateLength>
             </h:inputTextarea>
 
-            <h:outputText value="Author"></h:outputText>
-
-            <h:selectOneMenu class="form-control" value="#{post.author}">
-            <f:selectItems value="#{authorController.getAuthors()}" var="author" itemLabel="#{author.name}" itemValue="#{author.name}" />
-            </h:selectOneMenu>
             <br />
-            <h:commandButton class="btn btn-primary col-sm-12" action="#{postController.savePost}" value="Create New Post"></h:commandButton>
+            <h:commandButton class="btn btn-primary btn-block btn-lg" action="#{postController.savePost}" value="Create new blog post"></h:commandButton>
             
             <h:panelGroup rendered="#{postController.filter}">
             <div class="col-sm-12" style="padding-top: 20px"></div>
             <div id="OverrideButton" >
-            <h:commandButton class="btn btn-lg btn-danger col-sm-12" action="#{postController.savePostOverride}" value="Create New Post AnyWay"></h:commandButton>
+            <h:commandButton class="btn btn-lg btn-danger btn-block" action="#{postController.savePostOverride}" value="Create new post anyway"></h:commandButton>
             </div>
             </h:panelGroup>
         </h:form>
-        </div>
-    </h:body>
-</html>
+</ui:define>
+</ui:composition>

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.persistence.ManyToOne;
 
 @ManagedBean
 @Entity
@@ -18,9 +19,9 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    
 
-    private String author;
+    @ManyToOne
+    private Author author;
     
     private String title;
     
@@ -34,20 +35,20 @@ public class Post implements Serializable {
         this.title = title;
     }
     
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+    
+    public Author getAuthor() {
+        return this.author;
+    }
+    
     public String getBody() {
         return this.body;
     }
     
     public void setBody(String body) {
         this.body = body;
-    }
-    
-    public String getAuthor() {
-        return this.author;
-    }
-    
-    public void setAuthor(String author) {
-        this.author = author;
     }
     
     public Long getId() {
