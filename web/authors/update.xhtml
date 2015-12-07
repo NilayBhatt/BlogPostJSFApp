@@ -1,0 +1,36 @@
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    >
+    
+    <ui:define name="title">Update</ui:define>
+
+    <ui:define name="content">
+
+            <h2>Update your information</h2>
+            <p>Only input the things you want to change.  Not everything is required.</p>
+             <h:messages class="alert alert-success"></h:messages>
+        <h:form>
+                <div class="form-group">
+                <label>Name</label>
+                <h:inputText class="form-control" label="Name" value="#{author.name}">
+                </h:inputText>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                <h:inputText class="form-control" label="Email" value="#{author.email}">
+                </h:inputText>
+                </div>
+            
+  
+
+                <h:panelGroup></h:panelGroup>
+                <h:commandButton class="btn btn-primary" action="#{authorController.updateAuthor}" value="Update"></h:commandButton>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

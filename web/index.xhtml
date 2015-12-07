@@ -10,13 +10,19 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-sm-8 blog-main">
-                <ui:repeat value="#{postController.allPosts}" var="post">
+                <ui:repeat value="#{postController.allPosts}" var="temp">
                     <div class="blog-post">
-                    <h2 class="blog-post-title">#{post.title}</h2>
-                    <div class="blog-post-meta">By <a href="mailto:#{post.author.email}">#{post.author.name}</a></div>
+                    <h2 class="blog-post-title">#{temp.title}</h2>
+                    <div class="blog-post-meta">By <a href="mailto:#{temp.author.email}">#{temp.author.name}</a></div>
                     <p>
-                     #{post.body}
+                     #{temp.body}
                     </p>
+                    
+                    <ui:fragment rendered="#{temp.author.id eq user.id}">
+                        <h:form>
+                            <h:commandButton class="btn btn-danger" action="#{postController.deletePost(temp)}" value="Delete"></h:commandButton>
+                        </h:form>
+                    </ui:fragment>
                   </div>
                 </ui:repeat>
                 </div>

@@ -28,7 +28,7 @@
                     <h:form style="display: inline-block">
                         <h:commandLink action="#{authorController.logout()}" class="blog-nav-item" value="Logout"></h:commandLink>
                     </h:form>
-                 <a class="blog-nav-item pull-right">Welcome #{user.name}!</a>
+                 <a class="blog-nav-item pull-right" href="#{request.contextPath}/faces/authors/update.xhtml">Welcome #{user.name}!</a>
                 </h:panelGroup>
               </nav>
             </div>
@@ -47,7 +47,7 @@
         
         </div>
         
-        <footer class="blog-footer">
+        <footer class="blog-footer top-margin">
            <p>Best blog ever by Nilay Bhatt, Lukasz Brodowski, Donald Moretz.</p>
          <p>
             <a href="#">Back to top</a>

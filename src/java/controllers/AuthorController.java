@@ -15,8 +15,15 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 import java.security.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 
 
 @ManagedBean
@@ -56,8 +63,7 @@ public class AuthorController {
             ok = (Author)selectQuery.getSingleResult();
             
             if (ok.getPassword().equals(author.getPassword())) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.getExternalContext().getSessionMap().put("user", ok);
+                this.setUser(ok);
                 rValue = "success";
             } else {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -76,7 +82,55 @@ public class AuthorController {
         context.getExternalContext().getSessionMap().remove("user");
         return new String("success");
     }
+    
+    public Author getUser() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return (Author)context.getExternalContext().getSessionMap().get("user");
+    }
+    
+    public void setUser(Author user) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().put("user", user);
+    }
    
+    public String updateAuthor() {
+        try {
+            userTransaction.begin();
+            EntityManager em = entityManagerFactory.createEntityManager();
+            String selectSQL = "select a from Author a WHERE a.id = :id";
+            Query selectQuery = em.createQuery(selectSQL);
+ 
+            selectQuery.setParameter("id", this.getUser().getId());
+            Author user;
+            user = (Author)selectQuery.getSingleResult();
+            
+            if (! author.getName().equals("")) {
+                user.setName(author.getName());
+            }
+            
+            if (! author.getEmail().equals("")) {
+                user.setEmail(author.getEmail());
+            }
+            
+            em.persist(user);
+            this.setUser(user);
+            try {
+                userTransaction.commit();
+            } catch (Exception e) {} 
+            em.close();
+            
+            
+        } catch (Exception e) {}
+        
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage facesMessage = new FacesMessage("Your information has been updated successfully!");
+        this.author = null;
+        facesContext.addMessage(null, facesMessage);
+
+        return null;
+
+    }
 
     public List getAuthors() {
         List<Author> authors = new ArrayList();

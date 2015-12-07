@@ -74,6 +74,10 @@ public class Author implements Serializable {
        this.password = hash(password);
     }
     
+    public void setRawPassword(String password) {
+        this.password = password;
+    }
+    
     private String hash(String password) {
         MessageDigest msgDigest = null;
         try {

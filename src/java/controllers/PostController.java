@@ -3,6 +3,8 @@ package controllers;
 import models.Post;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import models.Author;
 
@@ -146,5 +150,31 @@ public class PostController {
      */
     public void setFilter(boolean filter) {
         this.filter = filter;
+    }
+    
+    public void deletePost(Post post) {
+    
+        try {
+            
+            userTransaction.begin();
+            EntityManager em = entityManagerFactory.createEntityManager();
+            String selectSQL = "select a from Post a WHERE a.id = :id";
+            Query selectQuery = em.createQuery(selectSQL);
+            
+            selectQuery.setParameter("id", post.getId());
+            Post temp;
+            temp = (Post)selectQuery.getSingleResult();
+            
+            em.remove(temp);
+            try {
+                userTransaction.commit();
+            } catch (Exception e) {}
+            em.close();
+            
+        } catch (NotSupportedException ex) {Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+}       catch (SystemException ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+     
     }
 }
