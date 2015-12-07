@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @ManagedBean
@@ -25,6 +27,8 @@ public class Post implements Serializable {
     
     private String title;
     
+    @Lob
+    @Column(length = 1000)
     private String body;
     
     public String getTitle() {

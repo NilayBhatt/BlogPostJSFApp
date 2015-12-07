@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -64,6 +65,9 @@ public class AuthorController {
             
             if (ok.getPassword().equals(author.getPassword())) {
                 this.setUser(ok);
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+                session.setAttribute("filter", false);
                 rValue = "success";
             } else {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
