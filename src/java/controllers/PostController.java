@@ -63,9 +63,11 @@ public class PostController {
     
     public String savePostOverride() {
         String returnValue = "error";
+        Author author = (Author)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         try {
             userTransaction.begin();
             EntityManager em = entityManagerFactory.createEntityManager();
+            post.setAuthor(author);
             em.persist(post);
             userTransaction.commit();
             em.close();

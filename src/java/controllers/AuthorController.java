@@ -56,10 +56,10 @@ public class AuthorController {
         String rValue = "error";
         Author ok;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        String selectSQL = "select p from Author p where p.email like :email";
+        String selectSQL = "select p from Author p where p.email = :email";
         try {
             Query selectQuery = entityManager.createQuery(selectSQL);
-            selectQuery.setParameter("email", author.getEmail() + "%");
+            selectQuery.setParameter("email", author.getEmail());
             ok = (Author)selectQuery.getSingleResult();
             
             if (ok.getPassword().equals(author.getPassword())) {
@@ -72,7 +72,10 @@ public class AuthorController {
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+                FacesMessage facesMessage = new FacesMessage("Wrong username/password.");
+                facesContext.addMessage(null, facesMessage);
+                return null;
         }
         return rValue;
     }
