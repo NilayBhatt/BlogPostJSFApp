@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import javax.servlet.http.HttpSession;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
@@ -62,6 +63,7 @@ public class PostController {
     }
     
     public String savePostOverride() {
+        setFilter(false);
         String returnValue = "error";
         Author author = (Author)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         try {
@@ -143,14 +145,21 @@ public class PostController {
     /**
      * @return the filter
      */
-    public boolean isFilter() {
-        return filter;
+    public boolean getFilter() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        boolean ok = (boolean) session.getAttribute("filter");
+        
+        return ok;
     }
 
     /**
      * @param filter the filter to set
      */
     public void setFilter(boolean filter) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        session.setAttribute("filter", filter);
         this.filter = filter;
     }
     
